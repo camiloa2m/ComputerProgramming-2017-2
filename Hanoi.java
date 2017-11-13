@@ -4,11 +4,18 @@ import acm.program.ConsoleProgram;
 public class Hanoi extends ConsoleProgram{
 
 	public void run() {
-		
+		//prueba del método
 		torresH(3, 'a','b', 'c');
 		println("El numero de pasos fueron: " + nPasos(3));
 		
 	}
+	/**
+	 * Método que pasa los discos de la torre inical a la torre final
+	 * @param numd Número de discos, tipo de dato int
+	 * @param torrei Nombre de la torre inicial en chart, se recomienda 'A'
+	 * @param torreaux Nombre de la torre auxiliar en chart, se recomienda 'B'
+	 * @param torref Nombre de la torre final en chart, se recomienda 'C'
+	 */
 	public void torresH(int numd,char torrei,char torreaux, char torref) {
 		if (numd == 1) {
 			println("Mueva disco de " + torrei + " a " + torref);
