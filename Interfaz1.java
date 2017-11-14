@@ -41,8 +41,8 @@ public class Interfaz1 extends GraphicsProgram {
 			d = discosC(i);
 			d.setFilled(true);
 			d.setFillColor(Color.RED);
-			add(d, cAstaX - 10*i, cAstaY);
-			d.move(0, -10);
+			add(d, cAstaX - 10*i, cAstaY- 10*(n-i));
+			//d.move(0, -10);
 		}	
 	}
 	public void astas () {
