@@ -2,9 +2,6 @@
 import acm.program.ConsoleProgram;
 
 public class Hanoi extends ConsoleProgram{
-	int [] tini = {};
-	int [] taux = {};
-	int [] tfin = {};
 
 	public void run() {
 		//prueba del método
