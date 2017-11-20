@@ -1,4 +1,4 @@
-
+package InicioProyecto;
 import acm.program.ConsoleProgram;
 
 public class Hanoi extends ConsoleProgram{

@@ -1,3 +1,4 @@
+package InicioProyecto;
 import java.awt.Color;
 
 import acm.graphics.*;
@@ -13,36 +14,33 @@ public class Interfaz1 extends GraphicsProgram {
 	public static final int bDisco = 20;
 	public static final double cAstaX = 225;
 	public static final int cAstaY= 290;
+	
+	public static final double cAsta2X = 225+300;
 		
+	public static final double cAsta3X = 225+600;
+	
+	
+	
 	public void run() {
 		discosApilados(10);
 		astas();
+		
 	}
 	
-	/**
-	 * Método que crea un disco gráfico
-	 * @param g Número de disco
-	 * @return Retorna disco 
-	 */
-	public GRoundRect discosC (int g) {
-		numDisk = g;
-		sizeDisk = numDisk*bDisco;
-		d = new GRoundRect(sizeDisk, hDisco);
-		return d;
-	}
-	
+		
 	/**
 	 * Método que crea una pila de discos de forma gráfica
 	 * @param n Número de discos en la pila
 	 */
 	public void discosApilados(int n) {
 		for (int i = n ; i>=0; i--) {
-			d = discosC(i);
+			Disk d = new Disk(i);
 			d.setFilled(true);
 			d.setFillColor(Color.RED);
 			add(d, cAstaX - 10*i, cAstaY- 10*(n-i));
 		}	
 	}
+	
 	
 	/**
 	 * Método que grafica las 3 astas o Ts donde van los discos
@@ -93,4 +91,5 @@ public class Interfaz1 extends GraphicsProgram {
 		add(ast3,700,100);
 		ast3.sendToBack();
 	}
+	
 }
