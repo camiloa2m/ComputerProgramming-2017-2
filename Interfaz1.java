@@ -1,6 +1,6 @@
 package InicioProyecto;
 import java.awt.Color;
-
+import java.util.ArrayList;
 import acm.graphics.*;
 import acm.program.*;
 
@@ -20,13 +20,17 @@ public class Interfaz1 extends GraphicsProgram {
 	public static final double cAsta3X = 225+600;
 	
 	
+	ArrayList<Disk> torreA = new ArrayList<Disk>();
+	ArrayList<Disk> torreB = new ArrayList<Disk>();
+	ArrayList<Disk> torreC = new ArrayList<Disk>();	
+	
 	
 	public void run() {
-		discosApilados(10);
+		discosApilados(2);
 		astas();
-		
+		torresH(2,torreA,torreB,torreC);
 	}
-	
+
 		
 	/**
 	 * Método que crea una pila de discos de forma gráfica
@@ -37,8 +41,26 @@ public class Interfaz1 extends GraphicsProgram {
 			Disk d = new Disk(i);
 			d.setFilled(true);
 			d.setFillColor(Color.RED);
+			torreA.add(d);
 			add(d, cAstaX - 10*i, cAstaY- 10*(n-i));
 		}	
+	}
+	
+	//mejorar este metodo, no funciona!!!!
+	public void torresH(int num,ArrayList<Disk> torreA,ArrayList<Disk> torreB, ArrayList<Disk> torreC) {
+		Disk r = torreA.get(num-2);
+		int x = r.getnumDisk();
+		if (x == 1) {
+			//Disk y = torreA.get(num-2);
+			torreC.add(torreA.get(num-2));
+			torreA.remove(torreA.get(num-2));
+		} else {
+			torresH(num - 1, torreA, torreC, torreB);
+				Disk z = torreA.get(num-2);
+				torreC.add(z);
+				torreA.remove(z);
+			torresH(num - 1, torreB, torreA, torreC);
+		}
 	}
 	
 	

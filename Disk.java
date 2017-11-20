@@ -15,6 +15,7 @@ public class Disk extends GRoundRect{
 	 */
 	public Disk (int numDisk) {
 		super(numDisk*bDisco, hDisco);
+		this.numDisk = numDisk;
 	}
 	
 	public int getnumDisk() {
