@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import acm.graphics.*;
 import acm.program.*;
 
-public class Interfaz1 extends GraphicsProgram {
-	
-	private int numDisk;
-	private int sizeDisk;
-	private GRoundRect d;
+public class Interfaz extends GraphicsProgram {
 	
 	public static final int hDisco = 10;
 	public static final int bDisco = 20;
@@ -27,10 +23,49 @@ public class Interfaz1 extends GraphicsProgram {
 	public void run() {
 		discosApilados(2);
 		astas();
-		torresH(2,torreA,torreB,torreC);
+		torresH(1, 'A','B', 'C');
 	}
 
+	public void torresH(int numd,char torrei,char torreaux, char torref) {
+		if (numd == 1) {
+			//"Mueva disco "+numd+ " de " + torrei + " a " + torref
+			mueve(numd,torrei,torref);
+		} else {
+			torresH(numd - 1, torrei, torref, torreaux);
+			//"Mueva disco "+numd+" de " + torrei + " a " + torref
+			mueve(numd,torrei,torref);
+			torresH(numd - 1, torreaux, torrei, torref);
+		}
+	}
+	
+	public void mueve(int numd,char torrei,char torref) {
+		traductorChartoLista(torrei);
+		traductorChartoLista(torref);
+		Disk r = traductorChartoLista(torrei).get(numd-1);
+		int x = r.getnumDisk();
+		if (numd == x) {
+			traductorChartoLista(torref).add(r);
+			traductorChartoLista(torrei).remove(r);
+		}
 		
+	}
+	
+	public ArrayList<Disk> traductorChartoLista(char x){
+		ArrayList<Disk> torre = null;
+		switch (x) {
+			case 'A':
+				torre = torreA;
+				break;
+			case 'B':
+				torre = torreB;
+				break;
+			case 'C':
+				torre = torreC;
+				break;
+		}
+		return torre;
+	}
+	
 	/**
 	 * Método que crea una pila de discos de forma gráfica
 	 * @param n Número de discos en la pila
@@ -45,24 +80,7 @@ public class Interfaz1 extends GraphicsProgram {
 		}	
 	}
 	
-	//mejorar este metodo, no funciona!!!!
-	public void torresH(int num,ArrayList<Disk> torreA,ArrayList<Disk> torreB, ArrayList<Disk> torreC) {
-		Disk r = torreA.get(num-1);
-		int x = r.getnumDisk();
-		if (x == 1) {
-			//Disk y = torreA.get(num-1);
-			torreC.add(torreA.get(num-1));
-			torreA.remove(torreA.get(num-1));
-		} else {
-			torresH(num - 1, torreA, torreC, torreB);
-				Disk z = torreA.get(num-1);
-				torreC.add(z);
-				torreA.remove(z);
-			torresH(num - 1, torreB, torreA, torreC);
-		}
-	}
-	
-	
+
 	/**
 	 * Método que grafica las 3 astas o Ts donde van los discos
 	 */
