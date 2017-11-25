@@ -1,31 +1,42 @@
 package InicioProyecto;
-import java.awt.Color;
-import java.util.ArrayList;
+
 import acm.graphics.*;
 import acm.program.*;
+import java.awt.Color;
+import java.util.Stack;
+
 
 public class Interfaz extends GraphicsProgram {
 	
-	public static final int hDisco = 10;
-	public static final int bDisco = 20;
-	public static final double cAstaX = 225;
-	public static final int cAstaY= 290;
+	Stack<Disk> torreA = new Stack<Disk>(); 
+	Stack<Disk> torreB = new Stack<Disk>();
+	Stack<Disk> torreC = new Stack<Disk>();	
 	
-	public static final double cAsta2X = 225+300;
-	public static final double cAsta3X = 225+600;
+	int h = Disk.hDisco; 
+	int time; //Tiempo de espera para cambiar discos en milisegundos(ms)
 	
+	public static final double cAstaX = 225; //Posicion en x del centro del asta 1
+	public static final int cAstaY= 290; //Posicion en y del centro de las astas
+	public static final double cAsta2X = 225+300; //Posicion en x del centro del asta 2
+	public static final double cAsta3X = 225+600; //Posicion en x del centro del asta 3
 	
-	ArrayList<Disk> torreA = new ArrayList<Disk>();
-	ArrayList<Disk> torreB = new ArrayList<Disk>();
-	ArrayList<Disk> torreC = new ArrayList<Disk>();	
 	
 	
 	public void run() {
-		discosApilados(2);
-		astas();
-		torresH(1, 'A','B', 'C');
+		int num = 4; //numero de discos
+		time = 1000; //tiempo en milisengundos (ms)
+		discosApilados(num); //Crea la pila de discos
+		astas(); //Dibuja las astas
+		torresH(num, 'A','B', 'C'); // resuelve el problema
 	}
 
+	/**
+	 * Función recursiva quu resuelve el problema base. 
+	 * @param numd Número de discos
+	 * @param torrei Nombre de la torre inicial en chart,'A'
+	 * @param torreaux Nombre de la torre auxiliar en chart, 'B'
+	 * @param torref Nombre de la torre final en chart, 'C'
+	 */
 	public void torresH(int numd,char torrei,char torreaux, char torref) {
 		if (numd == 1) {
 			//"Mueva disco "+numd+ " de " + torrei + " a " + torref
@@ -38,20 +49,39 @@ public class Interfaz extends GraphicsProgram {
 		}
 	}
 	
+	/**
+	 * Método que mueve los discos de una torrei a una torref
+	 * @param numd Número del disco
+	 * @param torrei Nombre de la torre de donde se mueve el disco
+	 * @param torref Nombre de la torre hacia donde se lleva el disco
+	 */
 	public void mueve(int numd,char torrei,char torref) {
-		traductorChartoLista(torrei);
-		traductorChartoLista(torref);
-		Disk r = traductorChartoLista(torrei).get(numd-1);
-		int x = r.getnumDisk();
-		if (numd == x) {
-			traductorChartoLista(torref).add(r);
-			traductorChartoLista(torrei).remove(r);
+		Stack <Disk> i = traductorChartoLista(torrei);
+		Stack <Disk> f = traductorChartoLista(torref);
+		Disk k = i.pop();
+		pause(time);
+		remove(k);
+		switch (torref) {
+			case 'C':
+				add(f.push(k),cAsta3X - h*numd, cAstaY - h*(f.size())+h);
+				break;
+			case 'B':
+				add(f.push(k),cAsta2X - h*numd, cAstaY - h*(f.size())+h);
+				break;
+			case 'A':
+				add(f.push(k),cAstaX - h*numd, cAstaY - h*(f.size())+h);
+				break;
 		}
-		
 	}
 	
-	public ArrayList<Disk> traductorChartoLista(char x){
-		ArrayList<Disk> torre = null;
+	/**
+	 * Método que relaciona los chars 'A', 'B' y 'C', que representan las torres,
+	 * con un Stack correspondiente ya sea torreA, torreB o TorreC
+	 * @param x chars 'A', 'B' y 'C' que representan las torres
+	 * @return Retorna un Stack<Disk> que representa la torre
+	 */
+	public Stack<Disk> traductorChartoLista(char x){
+		Stack<Disk> torre = null;
 		switch (x) {
 			case 'A':
 				torre = torreA;
@@ -71,18 +101,20 @@ public class Interfaz extends GraphicsProgram {
 	 * @param n Número de discos en la pila
 	 */
 	public void discosApilados(int n) {
-		for (int i = n ; i>=0; i--) {
+		for (int i = n ; i>0; i--) {
 			Disk d = new Disk(i);
 			d.setFilled(true);
 			d.setFillColor(Color.RED);
-			torreA.add(d);
-			add(d, cAstaX - 10*i, cAstaY- 10*(n-i));
+			torreA.push(d);
+			add(d, cAstaX - h*i, cAstaY- h*(n-i));
 		}	
 	}
 	
 
+	
+
 	/**
-	 * Método que grafica las 3 astas o Ts donde van los discos
+	 * Método que grafica las 3 astas donde van los discos
 	 */
 	public void astas () {
 		//Crea la barra vertical
