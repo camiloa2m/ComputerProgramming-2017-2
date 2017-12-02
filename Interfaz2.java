@@ -3,6 +3,7 @@ package InicioProyecto;
 import acm.graphics.*;
 import acm.gui.IntField;
 import acm.program.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.Stack;
@@ -16,9 +17,9 @@ import javax.swing.JTextField;
 
 public class Interfaz2 extends GraphicsProgram {
 	
-	private static final int velocidadMinima = 1000;
-	private static final int velocidadInicial = 500;
-	private static final int velocidadMaxima = 20;
+	private static final int velocidadMinima = 1000; //Tiempo de espera para cambiar discos en milisegundos(ms)
+	private static final int velocidadInicial = 500; //Tiempo de espera para cambiar discos en milisegundos(ms)
+	private static final int velocidadMaxima = 20; //Tiempo de espera para cambiar discos en milisegundos(ms)
 	
 	private Thread runThread;
 	private Thread Thread;
@@ -32,18 +33,20 @@ public class Interfaz2 extends GraphicsProgram {
 	Stack<Disk> torreC = new Stack<Disk>();	
 	
 	int h = Disk.hDisco; 
-	double time; //Tiempo de espera para cambiar discos en milisegundos(ms)
-	private int num = readInt("Ingrese numero de discos");
-	
+			
 	public static final double cAstaX = 225; //Posicion en x del centro del asta 1
 	public static final int cAstaY= 290; //Posicion en y del centro de las astas
 	public static final double cAsta2X = 225+300; //Posicion en x del centro del asta 2
 	public static final double cAsta3X = 225+600; //Posicion en x del centro del asta 3
 	
+	private static final int wWidth = 1050; //Anvho de la ventana
+	private static final int wHeigth = 400; //Alto de la ventana
+	
 	
 	public void init () {
-		
-		numdis = new IntField(4);
+		setSize(wWidth, wHeigth); //CAmbia tamaño de la ventana
+		astas(); //Dibuja las astas
+		numdis = new IntField();
 		add(numdis, SOUTH);
 		add(new JButton ("Ajustar discos"), SOUTH);
 		add(new JButton ("Iniciar"), SOUTH); //JButton con etiqueta "Iniciar"
@@ -53,11 +56,8 @@ public class Interfaz2 extends GraphicsProgram {
 		add(velocidad, SOUTH);
 		add(new JLabel ("Velocidad Minima"), SOUTH);
 		
-		//int num = 4; //numero de discos
-		time = getVelocidadSeleccionada(); //tiempo en milisengundos (ms)
+		discosApilados(numdis.getValue()); //Crea la pila de discos
 		
-		discosApilados(num); //Crea la pila de discos
-		astas(); //Dibuja las astas
 		
 		addActionListeners();
 	}
@@ -81,12 +81,13 @@ public class Interfaz2 extends GraphicsProgram {
 	    runThread = new Thread(
 	      new  Runnable() {    
 	        public void run() {
-	        	torresH(num, 'A', 'B', 'C');
+	        	torresH(numdis.getValue(), 'A', 'B', 'C');
 	        }
 	      }
 	);
 	    runThread.start();
 	}
+	
 	private void ejecutarReiniciarThread() {
 		Thread = new Thread (
 			new Runnable(){
@@ -125,23 +126,30 @@ public class Interfaz2 extends GraphicsProgram {
 			torresH(numd - 1, torreaux, torrei, torref);
 		}
 	}
-	protected void fireActionPerformed() {
+	
+	//protected void fireActionPerformed() {
 		
-	}
+	//}
 	
 	public void eliminar() {
 		removeAll();
-		discosApilados(num);
+		torreA.removeAllElements(); //Elimina todos los elementos del stack 
+		torreB.removeAllElements(); //Elimina todos los elementos del stack 
+		torreC.removeAllElements(); //Elimina todos los elementos del stack 
+		discosApilados(numdis.getValue());
 		astas();
 	}
 	public void ajustar() {
 		removeAll();
+		torreA.removeAllElements(); //Elimina todos los elementos del stack 
+		torreB.removeAllElements(); //Elimina todos los elementos del stack 
+		torreC.removeAllElements(); //Elimina todos los elementos del stack 
 		discosApilados(numdis.getValue());
 		astas();
 	}
 	
 	/**
-	 * Método que mueve los discos de una torrei a una torref
+	 * Método que mueve los discos de una torrei(torre partida) a una torref(torre destino final)
 	 * @param numd Número del disco
 	 * @param torrei Nombre de la torre de donde se mueve el disco
 	 * @param torref Nombre de la torre hacia donde se lleva el disco
@@ -150,7 +158,7 @@ public class Interfaz2 extends GraphicsProgram {
 		Stack <Disk> i = traductorChartoLista(torrei);
 		Stack <Disk> f = traductorChartoLista(torref);
 		Disk k = i.pop();
-		pause(time);
+		pause(velocidad.getValue());
 		remove(k);
 		switch (torref) {
 			case 'C':
@@ -187,14 +195,6 @@ public class Interfaz2 extends GraphicsProgram {
 		return torre;
 	}
 
-	/**
-	 * Método que retorna un entero dependiendo la posición del JSlider
-	 * @return un entero que usaremos como velocidad
-	 */
-	public int getVelocidadSeleccionada() {
-		return velocidad.getValue();
-	}
-	
 	/**
 	 * Método que crea una pila de discos de forma gráfica
 	 * @param n Número de discos en la pila
