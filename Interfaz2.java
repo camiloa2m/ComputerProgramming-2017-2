@@ -133,7 +133,8 @@ public class Interfaz2 extends GraphicsProgram {
 		torreA.removeAllElements(); //Elimina todos los elementos del stack 
 		torreB.removeAllElements(); //Elimina todos los elementos del stack 
 		torreC.removeAllElements(); //Elimina todos los elementos del stack 
-		discosApilados(numdis.getValue());
+		//discosApilados(numdis.getValue());
+		discosApilados(0);
 		
 	}
 	public void ajustar() {
