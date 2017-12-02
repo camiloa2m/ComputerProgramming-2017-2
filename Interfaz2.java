@@ -127,25 +127,23 @@ public class Interfaz2 extends GraphicsProgram {
 		}
 	}
 	
-	//protected void fireActionPerformed() {
-		
-	//}
-	
 	public void eliminar() {
 		removeAll();
+		astas();
 		torreA.removeAllElements(); //Elimina todos los elementos del stack 
 		torreB.removeAllElements(); //Elimina todos los elementos del stack 
 		torreC.removeAllElements(); //Elimina todos los elementos del stack 
 		discosApilados(numdis.getValue());
-		astas();
+		
 	}
 	public void ajustar() {
 		removeAll();
+		astas();
 		torreA.removeAllElements(); //Elimina todos los elementos del stack 
 		torreB.removeAllElements(); //Elimina todos los elementos del stack 
 		torreC.removeAllElements(); //Elimina todos los elementos del stack 
 		discosApilados(numdis.getValue());
-		astas();
+		
 	}
 	
 	/**
