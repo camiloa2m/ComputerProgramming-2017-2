@@ -61,13 +61,12 @@ public class Interfaz2 extends GraphicsProgram {
 		
 		addActionListeners();
 	}
-	
+
 	public void actionPerformed(ActionEvent e){
 		
 		if(e.getActionCommand().equals("Iniciar")){
 			ejecutarNuevoThread();
 		}
-		
 		if(e.getActionCommand().equals("Reiniciar")) {
 			ejecutarReiniciarThread();
 		}
@@ -76,7 +75,9 @@ public class Interfaz2 extends GraphicsProgram {
 		}
 		
 	}
-
+	/**
+	 * Hilo que permite ejecutar el método torresH()
+	 */
 	private void ejecutarNuevoThread(){
 	    runThread = new Thread(
 	      new  Runnable() {    
@@ -87,7 +88,9 @@ public class Interfaz2 extends GraphicsProgram {
 	);
 	    runThread.start();
 	}
-	
+	/**
+	 * Hilo que permite ejecutar el método eliminar()
+	 */
 	private void ejecutarReiniciarThread() {
 		Thread = new Thread (
 			new Runnable(){
@@ -97,7 +100,10 @@ public class Interfaz2 extends GraphicsProgram {
 			}
 		);
 		Thread.start();
-	}		
+	}
+	/**
+	 * Hilo que permite ejecutar el método ajustar()
+	 */
 	private void ejecutarAjustarDiscos() {
 		Ajustar = new Thread (
 			new Runnable() {
@@ -127,6 +133,9 @@ public class Interfaz2 extends GraphicsProgram {
 		}
 	}
 	
+	/**
+	 * Método que reinicia las torres, es util en el caso que aparezca un error
+	 */
 	public void eliminar() {
 		removeAll();
 		astas();
@@ -137,6 +146,10 @@ public class Interfaz2 extends GraphicsProgram {
 		discosApilados(0);
 		
 	}
+	/**
+	 * Metodo que cambia el valor del metodo discosApilados
+	 * recibiendo un entero de un IntField
+	 */
 	public void ajustar() {
 		removeAll();
 		astas();
