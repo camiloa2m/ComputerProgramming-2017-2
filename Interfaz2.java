@@ -17,16 +17,14 @@ import javax.swing.JTextField;
 
 public class Interfaz2 extends GraphicsProgram {
 	
-	private static final int velocidadMinima = 1000; //Tiempo de espera para cambiar discos en milisegundos(ms)
-	private static final int velocidadInicial = 500; //Tiempo de espera para cambiar discos en milisegundos(ms)
-	private static final int velocidadMaxima = 20; //Tiempo de espera para cambiar discos en milisegundos(ms)
-	
+		
 	private Thread runThread;
 	private Thread Thread;
 	private Thread Ajustar;
 	
 	IntField numdis;
 	JSlider velocidad;
+	JTextField torreDestino;
 	
 	Stack<Disk> torreA = new Stack<Disk>(); 
 	Stack<Disk> torreB = new Stack<Disk>();
@@ -42,23 +40,31 @@ public class Interfaz2 extends GraphicsProgram {
 	private static final int wWidth = 1050; //Anvho de la ventana
 	private static final int wHeigth = 400; //Alto de la ventana
 	
+	private static final int velocidadMinima = 1000; //Tiempo de espera para cambiar discos en milisegundos(ms)
+	private static final int velocidadInicial = 500; //Tiempo de espera para cambiar discos en milisegundos(ms)
+	private static final int velocidadMaxima = 20; //Tiempo de espera para cambiar discos en milisegundos(ms)
 	
 	public void init () {
+		
 		setSize(wWidth, wHeigth); //CAmbia tamaño de la ventana
 		astas(); //Dibuja las astas
-		numdis = new IntField();
-		add(numdis, SOUTH);
-		add(new JButton ("Ajustar discos"), SOUTH);
-		add(new JButton ("Iniciar"), SOUTH); //JButton con etiqueta "Iniciar"
-		add(new JButton ("Reiniciar"), SOUTH); //JButton con etiqueta "Reiniciar"
-		add(new JLabel ("Velocidad Maxima"), SOUTH);
-		velocidad = new JSlider(velocidadMaxima, velocidadMinima, velocidadInicial);
+		numdis = new IntField(); // casilla para ingresar enteros
+		add(new JLabel ("# Discos"), NORTH); // etiqueta "# Discos"
+		add(numdis, NORTH);
+		add(new JButton ("Ajustar discos"), NORTH); // JButton con etiqueta "Ajustar discos"
+		add(new JButton ("Iniciar"), NORTH); //JButton con etiqueta "Iniciar"
+		add(new JButton ("Reiniciar"), NORTH); //JButton con etiqueta "Reiniciar"
+		add(new JLabel ("Velocidad Maxima"), SOUTH); // etiqueta "Velocidad Maxima"
+		velocidad = new JSlider(velocidadMaxima, velocidadMinima, velocidadInicial); // JSlider para modificar velocidad
 		add(velocidad, SOUTH);
-		add(new JLabel ("Velocidad Minima"), SOUTH);
+		add(new JLabel ("Velocidad Minima"), SOUTH); // etiqueta "Velocidad Minima"
+		
+		torreDestino = new JTextField("C "); // casilla para ingresar texto
+		add(new JLabel ("Torre destino"), NORTH); // etiqueta "Torre destino"
+		add(torreDestino,NORTH);
 		
 		discosApilados(numdis.getValue()); //Crea la pila de discos
-		
-		
+				
 		addActionListeners();
 	}
 	
@@ -76,18 +82,32 @@ public class Interfaz2 extends GraphicsProgram {
 		}
 		
 	}
-
+	
+		/**
+		 * Método que ejecuta torresH con respecto al valor ingresado en el TextField (cambia la torre de destino)
+		 */
 	private void ejecutarNuevoThread(){
 	    runThread = new Thread(
 	      new  Runnable() {    
 	        public void run() {
-	        	torresH(numdis.getValue(), 'A', 'B', 'C');
+	        	char x = torreDestino.getText().toUpperCase().charAt(0);
+	        	if (x == 'C') {
+	        		torresH(numdis.getValue(), 'A', 'B', x);
+	        	} else if (x == 'B') {
+	        		torresH(numdis.getValue(), 'A', 'C', x);
+	        	} else {
+	        		torresH(numdis.getValue(), 'A', 'B', 'C');
+	        		
+	        	}
 	        }
 	      }
 	);
 	    runThread.start();
 	}
 	
+	/**
+	 * Método que ejecuta el método eliminar () en un hilo
+	 */
 	private void ejecutarReiniciarThread() {
 		Thread = new Thread (
 			new Runnable(){
@@ -98,6 +118,10 @@ public class Interfaz2 extends GraphicsProgram {
 		);
 		Thread.start();
 	}		
+	
+	/**
+	 * Método que ejecuta el método ajustar () en un hilo
+	 */
 	private void ejecutarAjustarDiscos() {
 		Ajustar = new Thread (
 			new Runnable() {
@@ -126,7 +150,9 @@ public class Interfaz2 extends GraphicsProgram {
 			torresH(numd - 1, torreaux, torrei, torref);
 		}
 	}
-	
+	/**
+	 * Método que inicializa las torres con 0 discos
+	 */
 	public void eliminar() {
 		removeAll();
 		astas();
@@ -137,6 +163,10 @@ public class Interfaz2 extends GraphicsProgram {
 		discosApilados(0);
 		
 	}
+	
+	/**
+	 * Método que establece la condición inicial, es decir, gráfica los discos dependiendo del número de discos ingresado
+	 */
 	public void ajustar() {
 		removeAll();
 		astas();
@@ -226,6 +256,8 @@ public class Interfaz2 extends GraphicsProgram {
 		ast.add(b);
 		add(ast,100,100);
 		ast.sendToBack();
+		GLabel A = new GLabel("Torre A");
+		add(A,100+105,100+230);
 		
 		//Crea la barra vertical
 		GRect f = new GRect (125-2.5,50,5, 150);
@@ -241,6 +273,8 @@ public class Interfaz2 extends GraphicsProgram {
 		ast2.add(g);
 		add(ast2,400,100);
 		ast2.sendToBack();
+		GLabel B = new GLabel("Torre B");
+		add(B,400+105,100+230);
 		
 		//Crea la barra vertical
 		GRect h = new GRect (125-2.5,50,5, 150);
@@ -256,6 +290,8 @@ public class Interfaz2 extends GraphicsProgram {
 		ast3.add(j);
 		add(ast3,700,100);
 		ast3.sendToBack();
+		GLabel C = new GLabel("Torre C");
+		add(C,700+105,100+230);
 	}
 	
 }
