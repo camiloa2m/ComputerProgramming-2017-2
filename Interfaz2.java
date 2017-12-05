@@ -86,8 +86,6 @@ public class Interfaz2 extends GraphicsProgram {
 		/**
 		 * Método que ejecuta torresH con respecto al valor ingresado en el TextField (cambia la torre de destino)
 		 */
-	 * Hilo que permite ejecutar el método torresH()
-	 */
 	private void ejecutarNuevoThread(){
 	    runThread = new Thread(
 	      new  Runnable() {    
