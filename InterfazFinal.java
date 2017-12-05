@@ -15,7 +15,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 
-public class Interfaz2 extends GraphicsProgram {
+public class InterfazFinal extends GraphicsProgram {
 	
 		
 	private Thread runThread;
@@ -225,7 +225,7 @@ public class Interfaz2 extends GraphicsProgram {
 	}
 
 	/**
-	 * Método que crea una pila de discos de forma gráfica
+	 * Método que crea una pila de discos de forma gráfica y los agrupa en el stack torreA.
 	 * @param n Número de discos en la pila
 	 */
 	public void discosApilados(int n) {

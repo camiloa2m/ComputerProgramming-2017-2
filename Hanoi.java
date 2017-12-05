@@ -5,8 +5,9 @@ public class Hanoi extends ConsoleProgram{
 
 	public void run() {
 		//prueba del método
-		torresH(3, 'A','B', 'C');
-		println("El numero de pasos fueron: " + nPasos(8));
+		int num = readInt("Ingrese numero de discos: ");
+		torresH(num, 'A','B', 'C');
+		println("El numero de pasos fueron: " + nPasos(num));
 		
 	}
 	/**
