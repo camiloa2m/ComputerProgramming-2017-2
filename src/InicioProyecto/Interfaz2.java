@@ -67,13 +67,12 @@ public class Interfaz2 extends GraphicsProgram {
 				
 		addActionListeners();
 	}
-	
+
 	public void actionPerformed(ActionEvent e){
 		
 		if(e.getActionCommand().equals("Iniciar")){
 			ejecutarNuevoThread();
 		}
-		
 		if(e.getActionCommand().equals("Reiniciar")) {
 			ejecutarReiniciarThread();
 		}
@@ -82,10 +81,13 @@ public class Interfaz2 extends GraphicsProgram {
 		}
 		
 	}
+
 	
 		/**
 		 * Método que ejecuta torresH con respecto al valor ingresado en el TextField (cambia la torre de destino)
 		 */
+	 * Hilo que permite ejecutar el método torresH()
+	 */
 	private void ejecutarNuevoThread(){
 	    runThread = new Thread(
 	      new  Runnable() {    
@@ -107,7 +109,7 @@ public class Interfaz2 extends GraphicsProgram {
 	
 	/**
 	 * Método que ejecuta el método eliminar () en un hilo
-	 */
+	*/
 	private void ejecutarReiniciarThread() {
 		Thread = new Thread (
 			new Runnable(){
