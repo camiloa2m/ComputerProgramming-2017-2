@@ -1,3 +1,5 @@
 # InicioProyecto
-Proyecto que encuentra una soluciÛn gr·fica al problema de las torres de Hanoi por medio del lenguaje Java. 
-Se usÛ librerÌa acm.
+Proyecto que encuentra una soluci√≥n gr√°fica al problema de las torres de Hanoi por medio del lenguaje Java. 
+Se us√≥ librer√≠a acm.
+
+*Trabajo para asignatura sobre programaci√≥n de computadores (2017-2)
